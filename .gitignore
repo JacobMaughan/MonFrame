@@ -1,0 +1,9 @@
+__pycache__/Camera.cpython-39.pyc
+__pycache__/Enums.cpython-39.pyc
+__pycache__/Game.cpython-39.pyc
+__pycache__/Json.cpython-39.pyc
+__pycache__/Window.cpython-39.pyc
+entitys/__pycache__/PlayerEntity.cpython-39.pyc
+handler/__pycache__/EntityHandler.cpython-39.pyc
+handler/__pycache__/EventHandler.cpython-39.pyc
+.vscode/settings.json
