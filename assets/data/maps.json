@@ -1,1 +1,24 @@
-{}
+{
+    "level_1": {
+        "tiles": [
+            {
+                "x": 0,
+                "y": 0,
+                "spriteX": 0,
+                "spriteY": 0,
+                "collision": false,
+                "layer": 0
+            },
+            {
+                "x": 0,
+                "y": 0,
+                "spriteX": 1,
+                "spriteY": 0,
+                "collision": true,
+                "layer": 1
+            }
+        ],
+        "signs": [],
+        "triggers": []
+    }
+}

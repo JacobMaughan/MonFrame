@@ -10,8 +10,10 @@ class ObjectHandler():
             object.tick()
     
     def render(self, window, cameraRect):
-        for object in self.objects:
-            object.render(window, cameraRect)
+        for i in range(3):
+            for object in self.objects:
+                if object.layer == i:
+                    object.render(window, cameraRect)
     
     def addObject(self, object):
         self.objects.append(object)
@@ -27,5 +29,12 @@ class ObjectHandler():
         objects = []
         for object in self.objects:
             if object.ID == ID:
+                objects.append(object)
+        return objects
+
+    def collide(self, collider):
+        objects = []
+        for object in self.objects:
+            if collider.colliderect(object.rect):
                 objects.append(object)
         return objects

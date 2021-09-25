@@ -17,8 +17,6 @@ class MapHandler():
 
     def loadMap(self, mapName):
         mapToLoad = self.mapData[mapName]
-        levels = mapToLoad['levels']
         triggers = mapToLoad['triggers']
-        for i in range(len(levels)):
-            for tile in levels[i]['tiles']:
-                self.objectHandler.addObject(TileObject(tile['x'], tile['y'], 16 * self.scaleFactor, self.spriteSheetArray[tile['spriteY']][tile['spriteX']], tile['hasCollision'], i))
+        for tile in mapToLoad['tiles']:
+            self.objectHandler.addObject(TileObject(tile['x'], tile['y'], 16 * self.scaleFactor, tile['spriteX'], tile['spriteY'], self.spriteSheetArray[tile['spriteY']][tile['spriteX']], tile['collision'], tile['layer']))

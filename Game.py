@@ -67,7 +67,7 @@ class Game():
                     self.camera.moveToObject(self.entityHandler.getEntityByID('player'))
         else:
             self.tickCount += 1
-            self.eventHandler.tick()
+            self.eventHandler.tick(self.entityHandler)
             self.camera.tick()
             self.devTools.tick()
     
@@ -79,8 +79,14 @@ class Game():
             self.objectHandler.render(self.window, self.camera.rect)
             self.devTools.render()
         else:
-            self.devTools.render()
+            for y in range(-50, 50):
+                for x in range(-50, 50):
+                    if y == 0 and x == 0:
+                        self.window.drawRect((x * 16 * 4 + 1 - self.camera.rect.x, y * 16 * 4 + 1 - self.camera.rect.y, 14 * 4, 14 * 4), (0, 255, 0))
+                    else:
+                        self.window.drawRect((x * 16 * 4 + 1 - self.camera.rect.x, y * 16 * 4 + 1 - self.camera.rect.y, 14 * 4, 14 * 4), (0, 0, 0))
             self.objectHandler.render(self.window, self.camera.rect)
+            self.devTools.render()
         pygame.display.update()
 
     def start(self):
@@ -111,6 +117,7 @@ class Game():
         self.eventHandler.gameState = gameState
         if gameState == GameState.GAME:
             self.entityHandler.addEntity(PlayerEntity())
+            self.mapHandler.loadMap('level_1')
 
     # Save the controls file
     def saveControls(self):
