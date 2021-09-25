@@ -43,6 +43,23 @@ class EventHandler():
                             self.camera.velX = -1
                         elif event.key == self.controlsData['right']:
                             self.camera.velX = 1
+                    if self.devTools.selections[4][3]:
+                        if event.key == self.controlsData['dev-editor-up']:
+                            self.devTools.editorMove(Direction.UP)
+                        if event.key == self.controlsData['dev-editor-down']:
+                            self.devTools.editorMove(Direction.DOWN)
+                        if event.key == self.controlsData['dev-editor-left']:
+                            self.devTools.editorMove(Direction.LEFT)
+                        if event.key == self.controlsData['dev-editor-right']:
+                            self.devTools.editorMove(Direction.RIGHT)
+                        if event.key == self.controlsData['dev-editor-enter']:
+                            self.devTools.editorEnter()
+                        if event.key == self.controlsData['dev-editor-layer-toggle']:
+                            self.devTools.toggleLayer()
+                        if event.key == self.controlsData['dev-editor-collision-toggle']:
+                            self.devTools.toggleCollision()
+                        elif event.key == self.controlsData['dev-editor-save-map']:
+                            self.devTools.saveMap()
                 if event.key == self.controlsData['dev-tools']:
                     self.devTools.toggleActive()
                 

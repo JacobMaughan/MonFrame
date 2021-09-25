@@ -13,3 +13,4 @@ handler/__pycache__/MapHandler.cpython-39.pyc
 handler/__pycache__/SpriteSheetHandler.cpython-39.pyc
 handler/__pycache__/ObjectHandler.cpython-39.pyc
 objects/__pycache__/TileObject.cpython-39.pyc
+objects/__pycache__/SpriteObject.cpython-39.pyc
