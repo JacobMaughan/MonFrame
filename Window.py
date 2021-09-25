@@ -13,7 +13,7 @@ class Window():
 
         # Set window settings
         pygame.display.set_caption('MonFrame - ' + version)
-        #pygame.display.set_icon('./assets/art/icon.png')
+        pygame.display.set_icon(pygame.image.load('./assets/art/icon.png'))
         pygame.mouse.set_cursor((8, 8), (0, 0), (0, 0, 0, 0, 0, 0, 0, 0), (0, 0, 0, 0, 0, 0, 0, 0))
 
         # Create font/fonts

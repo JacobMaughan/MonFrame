@@ -12,12 +12,16 @@ import pygame
 # Local Imports
 path.append(getcwd() + '/handler')
 path.append(getcwd() + '/entitys')
+path.append(getcwd() + '/objects')
 from Enums import GameState
 from Json import Json
 from Window import Window
 from Camera import Camera
-from EventHandler import EventHandler
 from EntityHandler import EntityHandler
+from ObjectHandler import ObjectHandler
+from MapHandler import MapHandler
+from DevTools import DevTools
+from EventHandler import EventHandler
 from PlayerEntity import PlayerEntity
 
 class Game():
@@ -35,27 +39,48 @@ class Game():
         # Initialize Json Files
         self.controlsFile = Json('./assets/data/controls.json')
         self.controlsData = self.controlsFile.getJson()
+        self.mapFile = Json('./assets/data/maps.json')
+        self.mapData = self.mapFile.getJson()
 
         # Initialize Handlers
         self.window = Window(self.version)
         self.camera = Camera(self.window)
-        self.eventHandler = EventHandler(self.controlsData, self.camera, self)
         self.entityHandler = EntityHandler()
+        self.objectHandler = ObjectHandler()
+        self.mapHandler = MapHandler(self.mapData, self.objectHandler)
+        self.devTools = DevTools(self, self.window, self.camera, self.entityHandler, self.objectHandler)
+        self.eventHandler = EventHandler(self.controlsData, self.camera, self.devTools, self)
 
     def tick(self):
         # Games logic functions
-        self.tickCount += 1
-        self.eventHandler.tick()
-        self.entityHandler.tick(self.tickCount)
-        self.camera.tick()
+        if not self.gameState == GameState.MAP_EDITOR:
+            self.tickCount += 1
+            self.eventHandler.tick(self.entityHandler)
+            self.entityHandler.tick(self.tickCount)
+            self.objectHandler.tick()
+            self.camera.tick()
 
-        if self.gameState == GameState.GAME:
-            self.camera.moveToObject(self.entityHandler.getEntityByID('player'))
+            self.devTools.tick()
+
+            if self.gameState == GameState.GAME:
+                if not self.devTools.selections[3][3]:
+                    self.camera.moveToObject(self.entityHandler.getEntityByID('player'))
+        else:
+            self.tickCount += 1
+            self.eventHandler.tick()
+            self.camera.tick()
+            self.devTools.tick()
     
     def render(self):
         # Games render functions
         self.window.fillScreen((255, 255, 255))
-        self.entityHandler.render(self.window, self.camera.rect)
+        if not self.gameState == GameState.MAP_EDITOR:
+            self.entityHandler.render(self.window, self.camera.rect)
+            self.objectHandler.render(self.window, self.camera.rect)
+            self.devTools.render()
+        else:
+            self.devTools.render()
+            self.objectHandler.render(self.window, self.camera.rect)
         pygame.display.update()
 
     def start(self):
@@ -90,6 +115,9 @@ class Game():
     # Save the controls file
     def saveControls(self):
         self.controlsFile.saveJson(self.controlsData)
+
+    def saveMap(self):
+        self.mapFile.saveJson(self.mapData)
 
 if __name__ == '__main__':
     game = Game()

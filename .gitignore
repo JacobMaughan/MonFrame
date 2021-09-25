@@ -7,3 +7,9 @@ entitys/__pycache__/PlayerEntity.cpython-39.pyc
 handler/__pycache__/EntityHandler.cpython-39.pyc
 handler/__pycache__/EventHandler.cpython-39.pyc
 .vscode/settings.json
+__pycache__/DevTools.cpython-39.pyc
+.vscode/tasks.json
+handler/__pycache__/MapHandler.cpython-39.pyc
+handler/__pycache__/SpriteSheetHandler.cpython-39.pyc
+handler/__pycache__/ObjectHandler.cpython-39.pyc
+objects/__pycache__/TileObject.cpython-39.pyc

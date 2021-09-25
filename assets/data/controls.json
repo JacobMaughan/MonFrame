@@ -1,5 +1,8 @@
 {
-    "force-quit": 1073741910,
+    "dev-tools": 1073741910,
+    "dev-tools-up": 1073741906,
+    "dev-tools-down": 1073741905,
+    "dev-tools-select": 1073741912,
     "up": 119,
     "down": 115,
     "left": 97,

@@ -1,4 +1,4 @@
-# Description: Handles game objects
+# Description: Handles game entitys
 # Author: Jacob Maughan
 
 class EntityHandler():

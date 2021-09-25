@@ -7,9 +7,8 @@ from os import path
 
 class Json():
     def __init__(self, file):
-        if(path.isfile(file)):
-            self.file = file
-        else:
+        self.file = file
+        if not path.isfile(file):
             with open(self.file, "w") as newFile:
                 newFile.write("{}")
 
