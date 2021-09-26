@@ -8,6 +8,7 @@ from math import ceil
 # Lib Imports
 from pygame import Rect
 from pygame.sprite import Sprite
+from EntityHandler import EntityHandler
 
 # Local Imports
 from Enums import Direction
@@ -26,7 +27,7 @@ class DevTools():
 
         self.active = False
         self.rect = Rect(self.window.width / 2 - 8, self.window.height / 2 - 8, 16, 16)
-        self.selections = [[20, 20, 'Force Quit', False], [20, 50, 'Key Logger', False], [20, 80, 'Speed', False], [20, 110, 'Free Cam', False], [20, 140, 'Map Editor', False]]
+        self.selections = [[20, 20, 'Force Quit', False], [20, 50, 'Key Logger', False], [20, 80, 'Speed', False], [20, 110, 'Free Cam', False], [20, 140, 'Map Editor', False], [20, 170, 'Show Pos', False]]
         self.currentSelection = 0
         self.keyPressed = ''
         self.spriteSheet = SpriteSheetHandler('./assets/art/overworld.png')
@@ -69,8 +70,18 @@ class DevTools():
                     self.window.drawRect(self.rect, (255, 0, 0))
             if self.selections[4][3]:
                 self.window.drawRect(self.spriteSelecter, (255, 0, 255))
+                self.window.drawText(20, 420, 'Pos:' + str(self.rect.x + self.camera.rect.x) + ', ' + str(self.rect.y + self.camera.rect.y), (255, 0, 255))
                 self.window.drawText(20, 450, 'Layer:' + str(self.currentLayer), (255, 0, 255))
                 self.window.drawText(20, 480, 'Collision:' + str(self.hasCollision), (255, 0, 255))
+            if self.selections[5][3]:
+                if self.selections[3][3]:
+                    self.window.drawText(20, 480, 'Pos:' + str(self.rect.x + self.camera.rect.x) + ', ' + str(self.rect.y + self.camera.rect.y), (255, 0, 255))
+                else:
+                    player = self.entityHandler.getEntityByID('player')
+                    if not player == None:
+                        self.window.drawText(20, 480, 'Pos:' + str(player.rect.x) + ', ' + str(player.rect.y), (255, 0, 255))
+                    else:
+                        self.window.drawText(20, 480, 'Pos:' + str(self.rect.x + self.camera.rect.x) + ', ' + str(self.rect.y + self.camera.rect.y), (255, 0, 255))
     
     def toggleActive(self):
         self.active = not self.active
@@ -149,15 +160,32 @@ class DevTools():
         else:
             self.objectHandler.addObject(TileObject(x, y, 16 * 4, self.selectedSprite.spriteX, self.selectedSprite.spriteY, self.spriteSheetArrayForTile[self.selectedSprite.spriteY][self.selectedSprite.spriteX], self.hasCollision, self.currentLayer))
 
-    def toggleLayer(self):
+    def editorDelete(self):
+        x = floor(self.window.width / 2 + self.camera.rect.x)
+        y = floor(self.window.height / 2 + self.camera.rect.y)
+        x = floor(x / (16 * 4)) * 16 * 4
+        y = floor(x / (16 * 4)) * 16 * 4
+
+        objects = self.objectHandler.collide(Rect(self.rect.x + self.camera.rect.x, self.rect.y + self.camera.rect.y, self.rect.width, self.rect.height))
+        if len(objects) == 1:
+            if objects[0].ID == 'tile' and objects[0].layer == self.currentLayer:
+                self.objectHandler.removeObject(objects[0])
+        elif len(objects) == 2:
+            if objects[0].ID == 'tile' and objects[1].ID == 'tile':
+                for object in objects:
+                    if object.layer == self.currentLayer:
+                        self.objectHandler.removeObject(object)
+
+    
+    def editorToggleLayer(self):
         if self.currentLayer == 1: self.currentLayer = 0
         elif self.currentLayer == 0: self.currentLayer = 1
         else: self.currentLayer = 0
     
-    def toggleCollision(self):
+    def editorToggleCollision(self):
         self.hasCollision = not self.hasCollision
     
-    def saveMap(self):
+    def editorSaveMap(self):
         tiles = []
         for object in self.objectHandler.objects:
             if object.ID == 'tile':

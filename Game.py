@@ -45,8 +45,8 @@ class Game():
         # Initialize Handlers
         self.window = Window(self.version)
         self.camera = Camera(self.window)
-        self.entityHandler = EntityHandler()
         self.objectHandler = ObjectHandler()
+        self.entityHandler = EntityHandler(self.objectHandler)
         self.mapHandler = MapHandler(self.mapData, self.objectHandler)
         self.devTools = DevTools(self, self.window, self.camera, self.entityHandler, self.objectHandler)
         self.eventHandler = EventHandler(self.controlsData, self.camera, self.devTools, self)
@@ -75,8 +75,8 @@ class Game():
         # Games render functions
         self.window.fillScreen((255, 255, 255))
         if not self.gameState == GameState.MAP_EDITOR:
-            self.entityHandler.render(self.window, self.camera.rect)
             self.objectHandler.render(self.window, self.camera.rect)
+            self.entityHandler.render(self.window, self.camera.rect)
             self.devTools.render()
         else:
             for y in range(-50, 50):
@@ -118,6 +118,8 @@ class Game():
         if gameState == GameState.GAME:
             self.entityHandler.addEntity(PlayerEntity())
             self.mapHandler.loadMap('level_1')
+            self.entityHandler.getEntityByID('player').rect.x = 192
+            self.entityHandler.getEntityByID('player').rect.y = -256
 
     # Save the controls file
     def saveControls(self):

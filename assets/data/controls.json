@@ -8,6 +8,7 @@
     "dev-editor-left": 1073741916,
     "dev-editor-right": 1073741918,
     "dev-editor-enter": 1073741917,
+    "dev-editor-delete": 1073741922,
     "dev-editor-layer-toggle": 1073741919,
     "dev-editor-collision-toggle": 1073741921,
     "dev-editor-save-map": 1073741923,

@@ -46,20 +46,22 @@ class EventHandler():
                     if self.devTools.selections[4][3]:
                         if event.key == self.controlsData['dev-editor-up']:
                             self.devTools.editorMove(Direction.UP)
-                        if event.key == self.controlsData['dev-editor-down']:
+                        elif event.key == self.controlsData['dev-editor-down']:
                             self.devTools.editorMove(Direction.DOWN)
-                        if event.key == self.controlsData['dev-editor-left']:
+                        elif event.key == self.controlsData['dev-editor-left']:
                             self.devTools.editorMove(Direction.LEFT)
-                        if event.key == self.controlsData['dev-editor-right']:
+                        elif event.key == self.controlsData['dev-editor-right']:
                             self.devTools.editorMove(Direction.RIGHT)
-                        if event.key == self.controlsData['dev-editor-enter']:
+                        elif event.key == self.controlsData['dev-editor-enter']:
                             self.devTools.editorEnter()
-                        if event.key == self.controlsData['dev-editor-layer-toggle']:
-                            self.devTools.toggleLayer()
-                        if event.key == self.controlsData['dev-editor-collision-toggle']:
-                            self.devTools.toggleCollision()
+                        elif event.key == self.controlsData['dev-editor-delete']:
+                            self.devTools.editorDelete()
+                        elif event.key == self.controlsData['dev-editor-layer-toggle']:
+                            self.devTools.editorToggleLayer()
+                        elif event.key == self.controlsData['dev-editor-collision-toggle']:
+                            self.devTools.editorToggleCollision()
                         elif event.key == self.controlsData['dev-editor-save-map']:
-                            self.devTools.saveMap()
+                            self.devTools.editorSaveMap()
                 if event.key == self.controlsData['dev-tools']:
                     self.devTools.toggleActive()
                 
@@ -68,13 +70,13 @@ class EventHandler():
                 if self.gameState == GameState.GAME:
                     if not self.devTools.selections[3][3]:
                         if event.key == self.controlsData['up']:
-                            entityHandler.getEntityByID('player').velY = -1
+                            entityHandler.getEntityByID('player').move(Direction.UP, True)
                         elif event.key == self.controlsData['down']:
-                            entityHandler.getEntityByID('player').velY = 1
+                            entityHandler.getEntityByID('player').move(Direction.DOWN, True)
                         elif event.key == self.controlsData['left']:
-                            entityHandler.getEntityByID('player').velX = -1
+                            entityHandler.getEntityByID('player').move(Direction.LEFT, True)
                         elif event.key == self.controlsData['right']:
-                            entityHandler.getEntityByID('player').velX = 1
+                            entityHandler.getEntityByID('player').move(Direction.RIGHT, True)
             elif event.type == pygame.KEYUP:
                 # Universal Key Handling
                 if event.key == self.controlsData['dev-tools']:
@@ -94,10 +96,10 @@ class EventHandler():
                 if self.gameState == GameState.GAME:
                     if not self.devTools.selections[3][3]:
                         if event.key == self.controlsData['up']:
-                            entityHandler.getEntityByID('player').velY = 0
+                            entityHandler.getEntityByID('player').move(Direction.UP, False)
                         elif event.key == self.controlsData['down']:
-                            entityHandler.getEntityByID('player').velY = 0
+                            entityHandler.getEntityByID('player').move(Direction.DOWN, False)
                         elif event.key == self.controlsData['left']:
-                            entityHandler.getEntityByID('player').velX = 0
+                            entityHandler.getEntityByID('player').move(Direction.LEFT, False)
                         elif event.key == self.controlsData['right']:
-                            entityHandler.getEntityByID('player').velX = 0
+                            entityHandler.getEntityByID('player').move(Direction.RIGHT, False)
